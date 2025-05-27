@@ -1,0 +1,137 @@
+{
+	"info": {
+		"_postman_id": "929d7b35-55bb-4571-8bd9-4f6fa5d7027f",
+		"name": "Ethiopian Capital Market",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "45377149",
+		"_collection_link": "https://abel-4975262.postman.co/workspace/cc559436-0efc-488f-8201-1a46ba578ee7/collection/45377149-929d7b35-55bb-4571-8bd9-4f6fa5d7027f?action=share&source=collection_link&creator=45377149"
+	},
+	"item": [
+		{
+			"name": "http://localhost:5001/wrongpath",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:5001/companies/1"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5001/companies/1",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:5001/companies/1"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5001/market",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:5001/market"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5001/stocks/3?start_date=2025-04-01&end_date=2025-04-03",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5001/stocks/3?start_date=2025-04-01&end_date=2025-04-03",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"stocks",
+						"3"
+					],
+					"query": [
+						{
+							"key": "start_date",
+							"value": "2025-04-01"
+						},
+						{
+							"key": "end_date",
+							"value": "2025-04-03"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5001/stocks/3?start_date=2025/04/01&end_date=2025-04-03",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5001/stocks/3?start_date=2025/04/01&end_date=2025-04-03",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"stocks",
+						"3"
+					],
+					"query": [
+						{
+							"key": "start_date",
+							"value": "2025/04/01"
+						},
+						{
+							"key": "end_date",
+							"value": "2025-04-03"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5001/stocks/1",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:5001/stocks/1"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5001/stocks/9",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:5001/stocks/9"
+			},
+			"response": []
+		}
+	]
+}
