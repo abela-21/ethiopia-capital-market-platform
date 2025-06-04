@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Macroeconomic Indicators</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container my-4">
+        <h2>Macroeconomic Indicators</h2>
+
+        <!-- Download Macroeconomic Data Form -->
+        <div class="card p-3 mb-4">
+            <h5>Download Macroeconomic Data</h5>
+            <form class="row g-2" onsubmit="downloadMacroFiltered(event)">
+                <div class="col-md-3">
+                    <label for="date_from" class="form-label">From</label>
+                    <input type="date" id="date_from" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <label for="date_to" class="form-label">To</label>
+                    <input type="date" id="date_to" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <label for="variables" class="form-label">Variables</label>
+                    <select id="variables" class="form-select" multiple size="6">
+                        <option value="gdp_growth">GDP Growth</option>
+                        <option value="inflation_rate">Inflation Rate</option>
+                        <option value="interest_rate">Interest Rate</option>
+                        <option value="etb_usd">ETB/USD</option>
+                        <option value="fx_reserves">FX Reserves</option>
+                        <option value="trade_balance">Trade Balance</option>
+                        <option value="current_account_balance">Current Account</option>
+                        <option value="total_loans">Total Loans</option>
+                        <option value="total_deposits">Total Deposits</option>
+                        <option value="npl_ratio">NPL Ratio</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="format" class="form-label">Format</label>
+                    <select id="format" class="form-select">
+                        <option value="csv" selected>CSV</option>
+                        <option value="excel">Excel</option>
+                    </select>
+                </div>
+                <div class="col-md-1 align-self-end">
+                    <button type="submit" class="btn btn-primary w-100">Download</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Macroeconomic Data Table -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>GDP Growth (%)</th>
+                    <th>Inflation Rate (%)</th>
+                    <th>Interest Rate (%)</th>
+                    <th>ETB/USD</th>
+                </tr>
+            </thead>
+            <tbody id="macro-data-body"></tbody>
+        </table>
+
+        <!-- Chart for Macroeconomic Data -->
+        <canvas id="macroChart" height="150"></canvas>
+    </div>
+
+    <script>
+        // Fetch and populate macro data + chart
+        fetch(`/macro_indicators`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const tableBody = document.getElementById("macro-data-body");
+                const dates = [], gdpGrowth = [], inflationRate = [], interestRate = [], etbUsd = [];
+
+                if (data.length === 0) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="5" class="text-center text-warning">No macroeconomic data available.</td>
+                        </tr>`;
+                    return;
+                }
+
+                data.forEach(record => {
+                    const row = `<tr>
+                        <td>${record.date}</td>
+                        <td>${record.gdp_growth}</td>
+                        <td>${record.inflation_rate}</td>
+                        <td>${record.interest_rate}</td>
+                        <td>${record.etb_usd}</td>
+                    </tr>`;
+                    tableBody.innerHTML += row;
+
+                    dates.push(record.date);
+                    gdpGrowth.push(record.gdp_growth);
+                    inflationRate.push(record.inflation_rate);
+                    interestRate.push(record.interest_rate);
+                    etbUsd.push(record.etb_usd);
+                });
+
+                const ctx = document.getElementById("macroChart").getContext("2d");
+                new Chart(ctx, {
+                    type: "line",
+                    data: {
+                        labels: dates,
+                        datasets: [
+                            { label: "GDP Growth (%)", data: gdpGrowth, borderColor: "rgba(54, 162, 235, 1)", backgroundColor: "rgba(54, 162, 235, 0.2)", fill: true, tension: 0.4 },
+                            { label: "Inflation Rate (%)", data: inflationRate, borderColor: "rgba(255, 99, 132, 1)", backgroundColor: "rgba(255, 99, 132, 0.2)", fill: true, tension: 0.4 },
+                            { label: "Interest Rate (%)", data: interestRate, borderColor: "rgba(75, 192, 192, 1)", backgroundColor: "rgba(75, 192, 192, 0.2)", fill: true, tension: 0.4 },
+                            { label: "ETB/USD", data: etbUsd, borderColor: "rgba(255, 206, 86, 1)", backgroundColor: "rgba(255, 206, 86, 0.2)", fill: true, tension: 0.4 }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { display: true, position: "top" }
+                        },
+                        scales: {
+                            x: { title: { display: true, text: "Dates" }},
+                            y: { beginAtZero: false, title: { display: true, text: "Values" }}
+                        }
+                    }
+                });
+            })
+            .catch(error => {
+                document.getElementById("macro-data-body").innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center text-danger">Failed to load macroeconomic data.</td>
+                    </tr>`;
+            });
+
+        // 📥 Download macro data with date and variable filters
+        function downloadMacroFiltered(event) {
+            event.preventDefault();
+
+            const dateFrom = document.getElementById("date_from").value;
+            const dateTo = document.getElementById("date_to").value;
+            const variables = Array.from(document.getElementById("variables").selectedOptions).map(opt => opt.value);
+            const format = document.getElementById("format").value;
+
+            const queryParams = new URLSearchParams();
+            if (dateFrom) queryParams.append("date_from", dateFrom);
+            if (dateTo) queryParams.append("date_to", dateTo);
+            if (variables.length) queryParams.append("variables", variables.join(","));
+            queryParams.append("format", format);
+
+            window.location.href = `/download/macro_indicators?${queryParams.toString()}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,62 +1,99 @@
 # Ethiopia Capital Market Data Platform  
-## Development To-Do List (Sprint 1)
+## 📄 Development To-Do & Progress Log  
 
-**Date:** May 26, 2025  
-**Sprint:** Sprint 1 (Weeks 5–12)  
-**Version:** 1.1  
-**Author:** Abel
-
----
-
-## 📌 Objective  
-
-Track development progress for Sprint 1, covering core backend APIs, frontend dashboard layout, stock charts, and search functionality.
+**Date:** May 27, 2025  
+**Sprint:** Sprint 2  
+**Version:** 2.1  
+**Author:** Abela  
 
 ---
 
-## 📅 Sprint 1 Backend Status  
+## 📌 Sprint 1 Progress Summary  
 
-### 📦 Backend: API Development (Developer)
-
-| Task | Status | Notes |
-|:----------------------------------------------------|:--------|:----------------------------|
-| Create `/companies` GET endpoint                    | ✅ Done | Tested in Postman |
-| Create `/companies/<int:id>` GET endpoint           | ✅ Done | 200 + 404 handled |
-| Create `/stocks/<company_id>` GET endpoint w/ filters | ✅ Done | Date range tested |
-| Create `/market` GET endpoint                       | ✅ Done | Market cap + date validated |
-| Test all backend APIs via Postman                   | ✅ Done | Test JSON collection exported |
-| Push working backend APIs to GitHub                 | ✅ Done | Clean repo state |
+| Task                      | Status |
+|:---------------------------|:--------|
+| Backend APIs (Companies, Stocks, Market Summary) | ✅ Complete |
+| Postman testing + verification | ✅ Complete |
+| GitHub setup and code pushed | ✅ Complete |
+| Dashboard layout (HTML + Bootstrap) | ✅ Complete |
+| Market Summary Card + Movers | ✅ Complete |
+| Search Bar autocomplete | ✅ Complete |
+| Chart.js Stock Price Chart | ✅ Complete |
+| Search Results Page layout | ✅ Complete |
+| Market Summary API fetch | ✅ Complete |
+| Frontend rendering & mobile test | ✅ Complete |
 
 ---
 
-## 📅 Remaining Sprint 1 Frontend Tasks  
+## 📌 Sprint 2 Backend Progress  
 
-| Task | Status |
-|:----------------------------------------------------------|:--------|
-| Design clean Dashboard Page layout (HTML/Bootstrap)        | 🔜 |
-| Build Market Summary Card on Dashboard                     | 🔜 |
-| Build Top 3 Movers cards                                    | 🔜 |
-| Integrate Search Bar with autocomplete                      | 🔜 |
-| Create Stock Price Line Chart (Chart.js)                    | 🔜 |
-| Build Search Results Page layout                            | 🔜 |
-| Connect frontend AJAX calls to backend APIs                 | 🔜 |
-| Test frontend display and data rendering                    | 🔜 |
-| Push frontend code to GitHub                                 | 🔜 |
-| Test API + UI integration end-to-end                         | 🔜 |
-| Commit and push final Sprint 1 code                          | 🔜 |
-| Update `sprint_plan.md` and `development_todo.md` status     | 🔜 |
+| Task                                            | Status |
+|:------------------------------------------------|:--------|
+| 📄 Financials data ingestion from financial.csv | ✅ Complete |
+| 📄 MacroIndicators data ingestion from macro.csv | ✅ Complete |
+| 📝 Implemented `/financials/<company_id>` API endpoint | ✅ Complete |
+| 📝 Implemented `/macro_indicators` API endpoint | ✅ Complete |
+| 🧪 Postman tested all Financials and Macro API endpoints | ✅ All tests passed |
+| 📦 Code committed to GitHub | ✅ Complete |
+
+---
+
+## 📌 Sprint 2 Frontend Progress  
+
+| Task                                                 | Status |
+|:------------------------------------------------------|:--------|
+| Connect Financials API to frontend company page       | ✅ Complete |
+| Connect MacroIndicators API to Macro Overview page    | ✅ Complete |
+| Table rendering, error handling, and dynamic charts   | ✅ Complete |
+| Responsive layout testing (desktop & mobile)          | ✅ Complete |
+| Final integration testing of APIs and frontends       | ✅ All tests passed |
+
+---
+
+## 📊 API & Frontend Integration Test Log (Postman + Browser)
+
+| Test Item                              | Status |
+|:----------------------------------------|:--------|
+| Get all financials for company 1        | ✅ |
+| Filter financials by year 2023          | ✅ |
+| No financial data for invalid company   | ✅ |
+| Get all macro indicators                | ✅ |
+| Filter macro by `date_from`             | ✅ |
+| Filter macro by `date_to`               | ✅ |
+| Combined date range filter              | ✅ |
+| Frontend table population (financials)  | ✅ |
+| Revenue vs. Net Profit chart (financials) | ✅ |
+| Frontend table population (macro)       | ✅ |
+| Multi-line macro chart display          | ✅ |
+| Responsive mobile view adjustments      | ✅ |
+| Error handling fallback text            | ✅ |
 
 ---
 
 ## 📦 Deliverables Completed  
 
-- ✅ Backend API endpoints working  
-- ✅ Postman Test Collection exported  
-- ✅ Test results logged  
-- ✅ Code pushed to GitHub  
+✅ Financials and macroeconomic data loaded into DB  
+✅ All backend APIs developed and tested  
+✅ Frontend pages rendering dynamic API data  
+✅ Chart.js visualizations integrated  
+✅ Frontend fully responsive and mobile-friendly  
+✅ Code pushed to GitHub  
+✅ Markdown PDF-ready log  
 
 ---
 
-**Next Phase:**  
-✅ Move to Sprint 1 Frontend Development (Dashboard page scaffolding)
+## 📌 Next Sprint (Sprint 3) Plan  
+
+- 📄 Company overview news tab (static sample data)  
+- 📄 Analytics tab: stock price trends & simple volume insights  
+- 📝 User login (optional stretch)  
+- 📝 Deploy working prototype to AWS Free Tier (Heroku fallback)  
+- 📄 README.md + screenshots for GitHub  
+- 📊 Prepare funding pitch slides  
+
+---
+
+✅ Project vibe: clean, minimal, readable, scalable, mobile-ready — and AI-vibe-coded.
+
+---
 
