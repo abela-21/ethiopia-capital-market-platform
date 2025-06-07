@@ -1,0 +1,54 @@
+2025-06-06 14:18:21,058 - INFO - Starting to load company data
+2025-06-06 14:18:21,099 - INFO - Added company: Wegagen Bank
+2025-06-06 14:18:21,099 - INFO - Added company: Ethio Telecom
+2025-06-06 14:18:21,099 - INFO - Added company: Habesha Breweries
+2025-06-06 14:18:21,100 - INFO - Added company: Awash Insurance
+2025-06-06 14:18:21,101 - INFO - Added company: Dangote Cement
+2025-06-06 14:18:21,103 - ERROR - Error committing companies: (builtins.TypeError) SQLite Date type only accepts Python date objects as input.
+[SQL: INSERT INTO company (id, name, ticker, industry, description, sector, website, established_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: [{'description': 'Leading commercial bank in Ethiopia', 'ticker': 'WGB', 'website': 'https://www.wegagen.com', 'industry': 'Banking', 'name': 'Wegagen Bank', 'established_date': '1997-04-15', 'sector': 'Financial Services', 'id': 1}, {'description': 'Premier telecom provider', 'ticker': 'ETC', 'website': 'https://www.ethiotelecom.et', 'industry': 'Telecommunications', 'name': 'Ethio Telecom', 'established_date': '1894-11-01', 'sector': 'Communication', 'id': 2}, {'description': 'Major beverage company', 'ticker': 'HBR', 'website': 'https://www.habeshabreweries.com', 'industry': 'Manufacturing', 'name': 'Habesha Breweries', 'established_date': '2012-08-15', 'sector': 'Consumer Goods', 'id': 3}, {'description': 'Trusted insurer', 'ticker': 'AIN', 'website': 'https://www.awashinsurance.com', 'industry': 'Insurance', 'name': 'Awash Insurance', 'established_date': '1994-10-01', 'sector': 'Financial Services', 'id': 4}, {'description': 'Key cement producer', 'ticker': 'DCE', 'website': 'https://www.dangotecement.com', 'industry': 'Construction', 'name': 'Dangote Cement', 'established_date': '2015-06-05', 'sector': 'Industrial', 'id': 5}]]
+2025-06-06 14:18:21,104 - INFO - Starting financial data loading
+2025-06-06 14:18:21,111 - INFO - Added financial record for company 1, year 2022
+2025-06-06 14:18:21,112 - INFO - Added financial record for company 1, year 2023
+2025-06-06 14:18:21,113 - INFO - Added financial record for company 1, year 2024
+2025-06-06 14:18:21,113 - INFO - Added financial record for company 2, year 2024
+2025-06-06 14:18:21,114 - INFO - Added financial record for company 3, year 2024
+2025-06-06 14:18:21,117 - INFO - Financial data committed successfully
+2025-06-06 14:18:21,129 - INFO - Starting macro indicators data loading
+2025-06-06 14:18:21,144 - INFO - Found 4 macro indicator records to process
+2025-06-06 14:18:21,146 - INFO - Added macro indicators for date 2024-01-01
+2025-06-06 14:18:21,146 - INFO - Added macro indicators for date 2024-02-01
+2025-06-06 14:18:21,147 - INFO - Added macro indicators for date 2024-03-01
+2025-06-06 14:18:21,147 - INFO - Added macro indicators for date 2024-04-01
+2025-06-06 14:18:21,173 - INFO - Macro indicators committed successfully
+2025-06-06 14:18:21,174 - INFO - Starting user data loading
+2025-06-06 14:18:21,175 - INFO - Found 2 user records to process
+2025-06-06 14:18:21,176 - INFO - Added user: admin
+2025-06-06 14:18:21,176 - INFO - Added user: user1
+2025-06-06 14:18:21,181 - INFO - Users committed successfully
+2025-06-06 14:24:21,735 - INFO - Starting to load company data
+2025-06-06 14:24:21,788 - INFO - Added company: Wegagen Bank
+2025-06-06 14:24:21,788 - INFO - Added company: Ethio Telecom
+2025-06-06 14:24:21,789 - INFO - Added company: Habesha Breweries
+2025-06-06 14:24:21,789 - INFO - Added company: Awash Insurance
+2025-06-06 14:24:21,789 - INFO - Added company: Dangote Cement
+2025-06-06 14:24:21,796 - INFO - Companies committed successfully
+2025-06-06 14:24:21,797 - INFO - Starting financial data loading
+2025-06-06 14:24:21,807 - INFO - Added financial record for company 1, year 2022
+2025-06-06 14:24:21,808 - INFO - Added financial record for company 1, year 2023
+2025-06-06 14:24:21,809 - INFO - Added financial record for company 1, year 2024
+2025-06-06 14:24:21,810 - INFO - Added financial record for company 2, year 2024
+2025-06-06 14:24:21,810 - INFO - Added financial record for company 3, year 2024
+2025-06-06 14:24:21,812 - INFO - Financial data committed successfully
+2025-06-06 14:24:21,813 - INFO - Starting macro indicators data loading
+2025-06-06 14:24:21,816 - INFO - Found 4 macro indicator records to process
+2025-06-06 14:24:21,816 - INFO - Added macro indicators for date 2024-01-01
+2025-06-06 14:24:21,817 - INFO - Added macro indicators for date 2024-02-01
+2025-06-06 14:24:21,817 - INFO - Added macro indicators for date 2024-03-01
+2025-06-06 14:24:21,818 - INFO - Added macro indicators for date 2024-04-01
+2025-06-06 14:24:21,827 - INFO - Macro indicators committed successfully
+2025-06-06 14:24:21,827 - INFO - Starting user data loading
+2025-06-06 14:24:21,829 - INFO - Found 2 user records to process
+2025-06-06 14:24:21,830 - INFO - Added user: admin
+2025-06-06 14:24:21,831 - INFO - Added user: user1
+2025-06-06 14:24:21,835 - INFO - Users committed successfully

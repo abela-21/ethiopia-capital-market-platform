@@ -1,99 +1,63 @@
-# Ethiopia Capital Market Data Platform  
-## 📄 Development To-Do & Progress Log  
+# 📊 Ethiopia Capital Market Data Platform — Development Status  
 
-**Date:** May 27, 2025  
-**Sprint:** Sprint 2  
-**Version:** 2.1  
-**Author:** Abela  
+**Date:** 2025-05-27  
+**Owner:** Abel  
 
 ---
 
-## 📌 Sprint 1 Progress Summary  
+## ✅ Completed
 
-| Task                      | Status |
-|:---------------------------|:--------|
-| Backend APIs (Companies, Stocks, Market Summary) | ✅ Complete |
-| Postman testing + verification | ✅ Complete |
-| GitHub setup and code pushed | ✅ Complete |
-| Dashboard layout (HTML + Bootstrap) | ✅ Complete |
-| Market Summary Card + Movers | ✅ Complete |
-| Search Bar autocomplete | ✅ Complete |
-| Chart.js Stock Price Chart | ✅ Complete |
-| Search Results Page layout | ✅ Complete |
-| Market Summary API fetch | ✅ Complete |
-| Frontend rendering & mobile test | ✅ Complete |
+### ✅ Sprint 1  
+- ✅ Database Models (`model.py`)  
+- ✅ API Endpoints for Companies, Stocks, Market Summary  
+- ✅ Company Financials API  
+- ✅ MacroIndicators API  
+- ✅ User Registration & JWT Login  
+- ✅ Frontend Pages: Dashboard, Company Details, Macro Overview  
 
----
+### ✅ Sprint 2  
+- ✅ Download API: Companies, Financials, Macro Data (CSV/Excel)  
+- ✅ Frontend Download Form with Date Range & Variable Selector (Macro)  
+- ✅ Enhanced Macro Indicators page with multi-variable download  
 
-## 📌 Sprint 2 Backend Progress  
-
-| Task                                            | Status |
-|:------------------------------------------------|:--------|
-| 📄 Financials data ingestion from financial.csv | ✅ Complete |
-| 📄 MacroIndicators data ingestion from macro.csv | ✅ Complete |
-| 📝 Implemented `/financials/<company_id>` API endpoint | ✅ Complete |
-| 📝 Implemented `/macro_indicators` API endpoint | ✅ Complete |
-| 🧪 Postman tested all Financials and Macro API endpoints | ✅ All tests passed |
-| 📦 Code committed to GitHub | ✅ Complete |
+### ✅ Sprint 3  
+- ✅ Company Details: Chart & Table Updates  
+- ✅ Macro Overview Page with Chart.js, API integration  
+- ✅ Added New Home Landing Page:
+  - Summary Cards (from API)
+  - Quick Navigation Buttons  
+  - Static Market & Economy News List  
 
 ---
 
-## 📌 Sprint 2 Frontend Progress  
+## 🔜 Next Tasks  
 
-| Task                                                 | Status |
-|:------------------------------------------------------|:--------|
-| Connect Financials API to frontend company page       | ✅ Complete |
-| Connect MacroIndicators API to Macro Overview page    | ✅ Complete |
-| Table rendering, error handling, and dynamic charts   | ✅ Complete |
-| Responsive layout testing (desktop & mobile)          | ✅ Complete |
-| Final integration testing of APIs and frontends       | ✅ All tests passed |
-
----
-
-## 📊 API & Frontend Integration Test Log (Postman + Browser)
-
-| Test Item                              | Status |
-|:----------------------------------------|:--------|
-| Get all financials for company 1        | ✅ |
-| Filter financials by year 2023          | ✅ |
-| No financial data for invalid company   | ✅ |
-| Get all macro indicators                | ✅ |
-| Filter macro by `date_from`             | ✅ |
-| Filter macro by `date_to`               | ✅ |
-| Combined date range filter              | ✅ |
-| Frontend table population (financials)  | ✅ |
-| Revenue vs. Net Profit chart (financials) | ✅ |
-| Frontend table population (macro)       | ✅ |
-| Multi-line macro chart display          | ✅ |
-| Responsive mobile view adjustments      | ✅ |
-| Error handling fallback text            | ✅ |
+| 🚀 Task | 📌 Description | 🎯 Status |
+|:------------------|:------------------------------------------------|:-------------|
+| **Download Stocks API** | Create download route with date_from/date_to & CSV/Excel support | Pending |
+| **Company Details Enhancements** | Add company description, stock trend chart | Pending |
+| **Market Overview Enhancements** | Add Top Movers, market cap by sector summary | Pending |
+| **User Auth Download Lock (Optional)** | Restrict premium downloads to authenticated users | Optional |
+| **Dynamic News Feed** | Integrate RSS/API or `news.csv` for real-time news cards | Optional |
+| **Heroku/AWS Deployment** | Package app for public deployment | Future |
 
 ---
 
-## 📦 Deliverables Completed  
+## ✨ Improvements To Add
 
-✅ Financials and macroeconomic data loaded into DB  
-✅ All backend APIs developed and tested  
-✅ Frontend pages rendering dynamic API data  
-✅ Chart.js visualizations integrated  
-✅ Frontend fully responsive and mobile-friendly  
-✅ Code pushed to GitHub  
-✅ Markdown PDF-ready log  
+- 📦 Add more macro data types: FX Reserves, Trade Balance, Current Account, Loans, Deposits, NPL Ratio  
+- 📊 Allow users to download stocks data with date filter  
+- 📈 Add Total Market Summary download route  
+- 📥 Dedicated Data Download Page (central hub)  
+- 🎨 Optionally upgrade UI to an AdminLTE or Shadcn dashboard vibe  
 
 ---
 
-## 📌 Next Sprint (Sprint 3) Plan  
+## 📦 GitHub  
 
-- 📄 Company overview news tab (static sample data)  
-- 📄 Analytics tab: stock price trends & simple volume insights  
-- 📝 User login (optional stretch)  
-- 📝 Deploy working prototype to AWS Free Tier (Heroku fallback)  
-- 📄 README.md + screenshots for GitHub  
-- 📊 Prepare funding pitch slides  
+**Repository:** `https://github.com/abela-21/ethiopia-capital-market-platform.git 
+**To save changes:**  
 
----
 
-✅ Project vibe: clean, minimal, readable, scalable, mobile-ready — and AI-vibe-coded.
 
----
-
+✅ All code tested locally via Postman, Flask debug, and browser console logs.

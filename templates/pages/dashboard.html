@@ -1,0 +1,215 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Market Dashboard{% endblock %}
+
+{% block styles %}
+<style>
+    .market-card {
+        transition: transform 0.2s;
+        border-left: 4px solid transparent;
+    }
+    .market-card:hover {
+        transform: translateY(-5px);
+    }
+    .market-card.positive {
+        border-left-color: #198754;
+    }
+    .market-card.negative {
+        border-left-color: #dc3545;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <h1 class="mb-4">Market Overview</h1>
+
+    <!-- Search Bar with Static Autocomplete -->
+    <div class="mb-4 position-relative">
+        <input type="text" class="form-control" id="search-bar" 
+               placeholder="Search for a company..." onkeyup="showSuggestions()">
+        <ul id="suggestions" class="list-group position-absolute w-100" 
+            style="z-index: 1000; display: none;"></ul>
+    </div>
+
+    <!-- Download Buttons -->
+    <div class="mb-3">
+        <a href="/api/v1/download/companies" class="btn btn-primary">
+            Download Companies Data (CSV)
+        </a>
+        <a href="/api/v1/download/macro_indicators" class="btn btn-secondary">
+            Download Macro Data (CSV)
+        </a>
+    </div>
+
+    <!-- Market Summary Card -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div id="market-summary" class="card market-card">
+                <div class="card-body">
+                    <h5 class="card-title">Market Summary</h5>
+                    <p class="card-text">Total Companies: <span id="total-companies">-</span></p>
+                    <p class="card-text">Total Market Cap: <span id="market-cap">-</span></p>
+                    <p class="card-text">Active Companies: <span id="active-companies">-</span></p>
+                    <p class="card-text">Last Updated: <span id="last-updated">-</span></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card market-card">
+                <div class="card-body">
+                    <h5>Download Macroeconomic Data</h5>
+                    <form class="row g-2" onsubmit="downloadMacro(event)">
+                        <div class="col-md-4">
+                            <label for="date_from" class="form-label">From</label>
+                            <input type="date" id="date_from" class="form-control">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="date_to" class="form-label">To</label>
+                            <input type="date" id="date_to" class="form-control">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="format" class="form-label">Format</label>
+                            <select id="format" class="form-select">
+                                <option value="csv" selected>CSV</option>
+                                <option value="excel">Excel</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary w-100">Download</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Market Leaders -->
+    <div id="market-leaders" class="row row-cols-1 row-cols-md-3 g-3 mb-4">
+        <!-- Will be populated by JavaScript -->
+    </div>
+
+    <!-- Market Trend Chart -->
+    <div class="card market-card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Market Trend</h5>
+            <canvas id="marketChart" height="150"></canvas>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Company Search
+const companies = ["Wegagen Bank", "Ethio Telecom", "Dashen Bank", "Hibret Bank", "CBE"];
+function showSuggestions() {
+    const input = document.getElementById("search-bar").value.toLowerCase();
+    const suggestions = document.getElementById("suggestions");
+    suggestions.innerHTML = "";
+    
+    if (input.length === 0) {
+        suggestions.style.display = "none";
+        return;
+    }
+    
+    const matches = companies.filter(c => c.toLowerCase().includes(input));
+    matches.forEach(match => {
+        const item = document.createElement("li");
+        item.className = "list-group-item cursor-pointer";
+        item.textContent = match;
+        item.onclick = () => {
+            window.location.href = `/api/v1/companies/${match.replace(/ /g, '-').toLowerCase()}`;
+        };
+        suggestions.appendChild(item);
+    });
+    
+    suggestions.style.display = matches.length ? "block" : "none";
+}
+
+// Market Summary
+fetch("/api/v1/market/summary")
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("total-companies").textContent = data.total_companies;
+        document.getElementById("market-cap").textContent = 
+            new Intl.NumberFormat('en-ET', { 
+                style: 'currency', 
+                currency: 'ETB' 
+            }).format(data.total_market_cap);
+        document.getElementById("active-companies").textContent = data.active_companies;
+        document.getElementById("last-updated").textContent = new Date().toLocaleDateString();
+    })
+    .catch(error => console.error("Error fetching market summary:", error));
+
+// Market Leaders
+fetch("/api/v1/market/leaders")
+    .then(response => response.json())
+    .then(data => {
+        const container = document.getElementById("market-leaders");
+        container.innerHTML = '';
+        
+        data.market_leaders.top_gainers.forEach(company => {
+            container.innerHTML += `
+                <div class="col">
+                    <div class="card market-card ${company.change >= 0 ? 'positive' : 'negative'} h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">${company.name}</h5>
+                            <p class="card-text">Price: ${company.price} ETB</p>
+                            <p class="card-text ${company.change >= 0 ? 'text-success' : 'text-danger'}">
+                                ${company.change >= 0 ? '+' : ''}${company.change}%
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    })
+    .catch(error => console.error("Error fetching market leaders:", error));
+
+// Market Trend Chart
+fetch("/api/v1/market/trends?days=10")
+    .then(response => response.json())
+    .then(data => {
+        const ctx = document.getElementById("marketChart").getContext("2d");
+        new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: data.trends.map(t => t.date),
+                datasets: [{
+                    label: "Market Cap (ETB)",
+                    data: data.trends.map(t => t.market_cap),
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    backgroundColor: "rgba(75, 192, 192, 0.2)",
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: false
+                    }
+                }
+            }
+        });
+    })
+    .catch(error => console.error("Error fetching market trends:", error));
+
+// Download Macro Data
+function downloadMacro(event) {
+    event.preventDefault();
+    const dateFrom = document.getElementById("date_from").value;
+    const dateTo = document.getElementById("date_to").value;
+    const format = document.getElementById("format").value;
+    
+    let url = `/api/v1/download/macro_indicators?format=${format}`;
+    if (dateFrom) url += `&date_from=${dateFrom}`;
+    if (dateTo) url += `&date_to=${dateTo}`;
+    
+    window.location.href = url;
+}
+</script>
+{% endblock %}

@@ -1,0 +1,245 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Macroeconomic Overview{% endblock %}
+
+{% block styles %}
+<style>
+    .macro-card {
+        transition: transform 0.2s;
+        border-left: 4px solid #0d6efd;
+    }
+    .macro-card:hover {
+        transform: translateY(-5px);
+    }
+    .indicator-select {
+        height: 200px !important;
+    }
+    .chart-container {
+        position: relative;
+        margin: 20px 0;
+        height: 400px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Macroeconomic Indicators</h2>
+        <div class="d-flex gap-2">
+            <button class="btn btn-outline-secondary" onclick="refreshData()">
+                <i class="fas fa-sync"></i> Refresh Data
+            </button>
+        </div>
+    </div>
+
+    <!-- Download Form -->
+    <div class="card macro-card p-3 mb-4">
+        <h5>Download Macroeconomic Data</h5>
+        <form class="row g-2" onsubmit="downloadMacroFiltered(event)">
+            <div class="col-md-3">
+                <label for="date_from" class="form-label">From</label>
+                <input type="date" id="date_from" class="form-control">
+            </div>
+            <div class="col-md-3">
+                <label for="date_to" class="form-label">To</label>
+                <input type="date" id="date_to" class="form-control">
+            </div>
+            <div class="col-md-3">
+                <label for="variables" class="form-label">Variables</label>
+                <select id="variables" class="form-select indicator-select" multiple>
+                    <option value="gdp_growth">GDP Growth</option>
+                    <option value="inflation_rate">Inflation Rate</option>
+                    <option value="interest_rate">Interest Rate</option>
+                    <option value="etb_usd">ETB/USD</option>
+                    <option value="fx_reserves">FX Reserves</option>
+                    <option value="trade_balance">Trade Balance</option>
+                    <option value="current_account_balance">Current Account</option>
+                    <option value="total_loans">Total Loans</option>
+                    <option value="total_deposits">Total Deposits</option>
+                    <option value="npl_ratio">NPL Ratio</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label for="format" class="form-label">Format</label>
+                <select id="format" class="form-select">
+                    <option value="csv" selected>CSV</option>
+                    <option value="excel">Excel</option>
+                </select>
+            </div>
+            <div class="col-md-1 align-self-end">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Data Table -->
+    <div class="card macro-card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Recent Indicators</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Date</th>
+                            <th>GDP Growth (%)</th>
+                            <th>Inflation Rate (%)</th>
+                            <th>Interest Rate (%)</th>
+                            <th>ETB/USD</th>
+                        </tr>
+                    </thead>
+                    <tbody id="macro-data-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="card macro-card">
+        <div class="card-body">
+            <h5 class="card-title">Trends Analysis</h5>
+            <div class="chart-container">
+                <canvas id="macroChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function refreshData() {
+        fetchMacroData();
+    }
+
+    function fetchMacroData() {
+        fetch('/macro_indicators')
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to fetch macro data');
+                return response.json();
+            })
+            .then(data => {
+                populateTable(data);
+                renderChart(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById("macro-data-body").innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center text-danger">
+                            Failed to load macroeconomic data
+                        </td>
+                    </tr>`;
+            });
+    }
+
+    function populateTable(data) {
+        const tableBody = document.getElementById("macro-data-body");
+        tableBody.innerHTML = '';
+
+        if (data.length === 0) {
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="5" class="text-center text-warning">
+                        No macroeconomic data available
+                    </td>
+                </tr>`;
+            return;
+        }
+
+        data.forEach(record => {
+            tableBody.innerHTML += `
+                <tr>
+                    <td>${record.date}</td>
+                    <td>${record.gdp_growth}</td>
+                    <td>${record.inflation_rate}</td>
+                    <td>${record.interest_rate}</td>
+                    <td>${record.etb_usd}</td>
+                </tr>`;
+        });
+    }
+
+    function renderChart(data) {
+        const dates = data.map(d => d.date);
+        const datasets = [
+            {
+                label: "GDP Growth (%)",
+                data: data.map(d => d.gdp_growth),
+                borderColor: "rgba(54, 162, 235, 1)",
+                backgroundColor: "rgba(54, 162, 235, 0.2)",
+                fill: true,
+                tension: 0.4
+            },
+            {
+                label: "Inflation Rate (%)",
+                data: data.map(d => d.inflation_rate),
+                borderColor: "rgba(255, 99, 132, 1)",
+                backgroundColor: "rgba(255, 99, 132, 0.2)",
+                fill: true,
+                tension: 0.4
+            },
+            {
+                label: "Interest Rate (%)",
+                data: data.map(d => d.interest_rate),
+                borderColor: "rgba(75, 192, 192, 1)",
+                backgroundColor: "rgba(75, 192, 192, 0.2)",
+                fill: true,
+                tension: 0.4
+            },
+            {
+                label: "ETB/USD",
+                data: data.map(d => d.etb_usd),
+                borderColor: "rgba(255, 206, 86, 1)",
+                backgroundColor: "rgba(255, 206, 86, 0.2)",
+                fill: true,
+                tension: 0.4
+            }
+        ];
+
+        const ctx = document.getElementById("macroChart").getContext("2d");
+        if (window.macroChart) {
+            window.macroChart.destroy();
+        }
+        window.macroChart = new Chart(ctx, {
+            type: "line",
+            data: { labels: dates, datasets },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: "top" }
+                },
+                scales: {
+                    x: { title: { display: true, text: "Dates" }},
+                    y: { 
+                        beginAtZero: false,
+                        title: { display: true, text: "Values" }
+                    }
+                }
+            }
+        });
+    }
+
+    function downloadMacroFiltered(event) {
+        event.preventDefault();
+        const dateFrom = document.getElementById("date_from").value;
+        const dateTo = document.getElementById("date_to").value;
+        const variables = Array.from(document.getElementById("variables").selectedOptions)
+            .map(opt => opt.value);
+        const format = document.getElementById("format").value;
+
+        const queryParams = new URLSearchParams();
+        if (dateFrom) queryParams.append("date_from", dateFrom);
+        if (dateTo) queryParams.append("date_to", dateTo);
+        if (variables.length) queryParams.append("variables", variables.join(","));
+        queryParams.append("format", format);
+
+        window.location.href = `/download/macro_indicators?${queryParams.toString()}`;
+    }
+
+    // Initial load
+    fetchMacroData();
+</script>
+{% endblock %}

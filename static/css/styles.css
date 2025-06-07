@@ -1,0 +1,76 @@
+/* Base styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navigation */
+nav {
+    background-color: #343a40;
+    padding: 1rem;
+    margin-bottom: 2rem;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 1rem;
+    padding: 0.5rem 1rem;
+}
+
+nav a:hover {
+    background-color: #495057;
+    border-radius: 4px;
+}
+
+/* Content container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Table styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table th, table td {
+    border: 1px solid #dee2e6;
+    padding: 10px;
+    text-align: center;
+}
+
+table th {
+    background-color: #343a40;
+    color: #fff;
+}
+
+/* Chart container */
+canvas {
+    margin: 20px auto;
+    display: block;
+    max-width: 100%;
+}
+
+/* Active navigation link */
+.nav-link.active {
+    font-weight: bold;
+    color: #007bff;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 0.5rem;
+    }
+    
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+}

@@ -1,6 +1,6 @@
-﻿id,name,ticker,industry,description
-1,Wegagen Bank,WGB,Banking,"""Leading commercial bank in Ethiopia offering retail and corporate banking services."""
-2,Ethio Telecom,ETC,Telecommunications,"""Premier telecom provider  expanding mobile and internet services across Ethiopia."""
-3,Habesha Breweries,HBR,Manufacturing,"""Major beverage company  producing popular beer brands for domestic and export markets."""
-4,Awash Insurance,AIN,Insurance,"""Trusted insurer providing life health  and property coverage."""
-5,Dangote Cement Ethiopia,DCE,Construction,"""Key player in cement production  supporting Ethiopia’s infrastructure growth."""
+﻿id,name,ticker,industry,description,sector,website,established_date
+1,Wegagen Bank,WGB,Banking,"Leading commercial bank in Ethiopia",Financial Services,https://www.wegagen.com,1997-04-15
+2,Ethio Telecom,ETC,Telecommunications,"Premier telecom provider",Communication,https://www.ethiotelecom.et,1894-11-01
+3,Habesha Breweries,HBR,Manufacturing,"Major beverage company",Consumer Goods,https://www.habeshabreweries.com,2012-08-15
+4,Awash Insurance,AIN,Insurance,"Trusted insurer",Financial Services,https://www.awashinsurance.com,1994-10-01
+5,Dangote Cement,DCE,Construction,"Key cement producer",Industrial,https://www.dangotecement.com,2015-06-05
